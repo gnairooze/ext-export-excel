@@ -1,9 +1,9 @@
 {
     "name": "Simple Export to Excel",
-    "version": "0.0.0.1",
+    "version": "0.0.0.8",
     "manifest_version": 2,
     "description": "A browser extension to export table data to excel file.",
-    "homepage_url": "https://github.com/",
+    "homepage_url": "https://github.com/gnairooze/ext-export-excel/wiki",
     "permissions": [
         "contextMenus",
         "activeTab",
