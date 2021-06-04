@@ -1,17 +1,32 @@
-function createFile(exportTable) {
-    var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
-    tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
-    tab_text = tab_text + '<x:Name>Sheet1</x:Name>';
-    tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
-    tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml>';
-	tab_text = tab_text + '<style>td {mso-number-format:"\@";/*force text*/}</style></head>';
-    tab_text = tab_text + "<body><table border='1px'>";
-    tab_text = tab_text + exportTable.outerHTML;
-    tab_text = tab_text + '</table></body>';
-    tab_text = tab_text + '</html>';
-    
-    //Save the file
-	var excelBlob = new Blob([tab_text], { type: "application/vnd.ms-excel;charset=utf-8" });
+function createHtml(exportTable) {
+    let tab_text = `
+	<html xmlns:x="urn:schemas-microsoft-com:office:excel">
+	<head>
+		<xml>
+			<x:ExcelWorkbook>
+				<x:ExcelWorksheets>
+					<x:ExcelWorksheet>
+						<x:Name>Sheet1</x:Name>
+						<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions>
+					</x:ExcelWorksheet>
+				</x:ExcelWorksheets>
+			</x:ExcelWorkbook>
+		</xml>
+		<style>td {mso-number-format:"\@";/*force text*/}</style>
+	</head>
+	<body>
+		<table border='1px'>
+			{{EXPORT_TABLE}}
+		</table>
+	</body>
+	</html>
+	`;
+	
+	return tab_text.replace("{{EXPORT_TABLE}}", exportTable.outerHTML);
+}
+
+function saveFile(content){
+	var excelBlob = new Blob([content], { type: "application/vnd.ms-excel;charset=utf-8" });
     var link=window.URL.createObjectURL(excelBlob);
 	window.location =link;
 	window.URL.revokeObjectURL(link);
@@ -31,8 +46,8 @@ function exportToExcel(){
 	const container = selectionRange.commonAncestorContainer;
 
 	if(container instanceof Element && (container.tagName.toLowerCase() == "tbody" || container.tagName.toLowerCase() == "table")){
-
-		createFile(container);
+		let content = createHtml(container);
+		saveFile(content);
 	}
 	else
 	{
