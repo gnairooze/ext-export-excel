@@ -1,0 +1,26 @@
+{
+    "name": "Simple Export to Excel",
+    "version": "0.0.0.1",
+    "manifest_version": 2,
+    "description": "A browser extension to export table data to excel file.",
+    "homepage_url": "https://github.com/",
+    "permissions": [
+        "contextMenus",
+        "activeTab",
+		"clipboardWrite"
+      ],
+    "icons": {
+        "16": "icons/table-16.png",
+        "32": "icons/table-32.png",
+        "48": "icons/table-48.png",
+        "128": "icons/table-128.png",
+        "512": "icons/table-512.png"
+    },
+    "background": {
+        "persistent": false,
+        "matches": ["<all_urls>"],
+        "scripts": [
+            "background.js"
+        ]
+      }
+}
