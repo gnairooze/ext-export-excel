@@ -34,16 +34,13 @@ function saveFile(content){
 
 function exportToExcel(){
 	const selection = document.getSelection();
-	let containerTagName = '';
 
 	if (selection.rangeCount === 0) {
 		alert("no selection found");
 		return false;
 	}
 
-	const selectionRange = selection.getRangeAt(0); // Only consider the first range
-
-	const container = selectionRange.commonAncestorContainer;
+	const container = selection.getRangeAt(0).commonAncestorContainer;
 
 	if(container instanceof Element && (container.tagName.toLowerCase() == "tbody" || container.tagName.toLowerCase() == "table")){
 		let content = createHtml(container);
